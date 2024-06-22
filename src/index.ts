@@ -1,12 +1,27 @@
-import express, { type Application, type Request, type Response, type NextFunction } from 'express';
+import express, { type Application, type Response } from 'express';
+import { routes } from './routes';
+import { logger } from './utils/logger';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app: Application = express();
 const port: number = 4000;
 
-app.use('/', (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ data: 'Hello World' });
+// parse body request
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+routes(app);
+
+// cors access handler
+app.use(cors());
+app.use((req, res: Response, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  next();
 });
 
 app.listen(port, () => {
-  console.log(`Server berjalan pada port ${port}`);
+  logger.info(`Server berjalan pada port ${port}`);
 });
