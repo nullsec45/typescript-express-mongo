@@ -1,20 +1,18 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import { createProductValidation } from '../validations/product.validation';
 import { logger } from '../utils/logger';
+import { getDetailProductDB, getProductDB } from '../services/product.service';
 
-const products = [
-  {
-    name: 'Sepatu Sport',
-    price: 500000
-  },
-  {
-    name: 'Tas',
-    price: 300000
-  }
-];
+// interface ProducType {
+//   product_id: String;
+//   name: String;
+//   price: Number;
+//   size: String;
+// }
 
-export const getProducts = (req: Request, res: Response, next: NextFunction) => {
-  logger.info('access get route product');
+export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+  const products = await getProductDB();
+  logger.info('access get route all data product');
 
   return res.status(200).send({
     stattus: true,
@@ -23,16 +21,17 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
   });
 };
 
-export const getProduct = (req: Request, res: Response, next: NextFunction) => {
-  logger.info('access get route product');
+export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
+  logger.info('access get route detail product');
 
   const {
     params: { name }
   } = req;
 
-  const filterProduct = products.filter((product) => {
-    return product.name === name;
-  });
+  const filterProduct = await getDetailProductDB(name);
+
+  logger.info(typeof filterProduct);
+  console.log(filterProduct);
 
   if (filterProduct.length === 0) {
     logger.info('Data not found');
@@ -42,6 +41,8 @@ export const getProduct = (req: Request, res: Response, next: NextFunction) => {
       message: 'Data not found'
     });
   }
+
+  logger.info(filterProduct);
 
   return res.status(200).send({
     stattus: true,
