@@ -1,3 +1,4 @@
+import type ProductType from '../types/product.type';
 import productModel from '../models/product.model';
 import { logger } from '../utils/logger';
 
@@ -13,9 +14,9 @@ export const getProductDB = async () => {
     });
 };
 
-export const getDetailProductDB = async (name: string) => {
+export const getDetailProductDB = async (productId: string) => {
   return await productModel
-    .find({ name })
+    .find({ product_id: productId })
     .then((data) => {
       return data;
     })
@@ -24,4 +25,8 @@ export const getDetailProductDB = async (name: string) => {
       logger.error(error);
       return [];
     });
+};
+
+export const addProductDB = async (payload: ProductType) => {
+  return await productModel.create(payload);
 };
