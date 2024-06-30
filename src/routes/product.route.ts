@@ -4,6 +4,6 @@ import { createProduct, getProducts, getProduct } from '../controllers/product.c
 export const ProductRouter: Router = Router();
 
 ProductRouter.get('/', getProducts);
-ProductRouter.get('/:name', getProduct);
+ProductRouter.get('/:productId', getProduct);
 
 ProductRouter.post('/', createProduct);
