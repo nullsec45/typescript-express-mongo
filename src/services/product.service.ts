@@ -30,3 +30,17 @@ export const getDetailProductDB = async (productId: string) => {
 export const addProductDB = async (payload: ProductType) => {
   return await productModel.create(payload);
 };
+
+export const updateProductDB = async (productId: string, payload: ProductType) => {
+  return await productModel.findOneAndUpdate(
+    {
+      product_id: productId
+    },
+    {
+      $set: payload
+    },
+    {
+      new: true
+    }
+  );
+};
