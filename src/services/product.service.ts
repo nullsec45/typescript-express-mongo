@@ -44,3 +44,9 @@ export const updateProductDB = async (productId: string, payload: ProductType) =
     }
   );
 };
+
+export const deleteProductDB = async (productId: string) => {
+  const result = await productModel.findOneAndDelete({ product_id: productId });
+
+  return result;
+};

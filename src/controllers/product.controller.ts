@@ -1,7 +1,13 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import { createProductValidation, updateProductValidation } from '../validations/product.validation';
 import { logger } from '../utils/logger';
-import { getDetailProductDB, getProductDB, addProductDB, updateProductDB } from '../services/product.service';
+import {
+  getDetailProductDB,
+  getProductDB,
+  addProductDB,
+  updateProductDB,
+  deleteProductDB
+} from '../services/product.service';
 import { v4 as uuidv4 } from 'uuid';
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -103,6 +109,32 @@ export const updateProduct = async (req: Request, res: Response) => {
       stattus: true,
       statusCode: 422,
       message: 'Add product failed :' + error
+    });
+  }
+};
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  const {
+    params: { productId }
+  } = req;
+
+  try {
+    const result = await deleteProductDB(productId);
+
+    if (!result) {
+      return res.status(404).send({ status: false, statusCode: 404, message: 'product id not found' });
+    }
+
+    logger.info('Success delete product');
+
+    return res.status(200).send({ status: true, statusCode: 200, message: 'delete product success' });
+  } catch (error) {
+    logger.error('ERR : product - delete', error);
+
+    return res.status(422).send({
+      stattus: true,
+      statusCode: 422,
+      message: 'Delete product failed :' + error
     });
   }
 };
