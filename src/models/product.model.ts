@@ -11,10 +11,10 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number
+    },
+    size: {
+      type: String
     }
-    // size: {
-    //   type: String
-    // }
   },
   { timestamps: true }
 );
