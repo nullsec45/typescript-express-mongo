@@ -24,6 +24,7 @@
     "no-return-assign": "off",
     "array-callback-return": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/restrict-plus-operands": "off"
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-confusing-void-expression": "off"
   }
 }
