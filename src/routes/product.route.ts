@@ -6,12 +6,13 @@ import {
   updateProduct,
   deleteProduct
 } from '../controllers/product.controller';
+import { requireAdmin } from '../middleware/auth';
 
 export const ProductRouter: Router = Router();
 
 ProductRouter.get('/', getProducts);
 ProductRouter.get('/:productId', getProduct);
 
-ProductRouter.post('/', createProduct);
-ProductRouter.put('/:productId', updateProduct);
-ProductRouter.delete('/:productId', deleteProduct);
+ProductRouter.post('/', requireAdmin, createProduct);
+ProductRouter.put('/:productId', requireAdmin, updateProduct);
+ProductRouter.delete('/:productId', requireAdmin, deleteProduct);
