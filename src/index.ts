@@ -7,12 +7,17 @@ import cors from 'cors';
 // connect to db
 import './utils/connectDB';
 
+// middleware jwt
+import deserializedToken from './middleware/deserialized';
+
 const app: Application = express();
 const port: number = 4000;
 
 // parse body request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(deserializedToken);
 
 routes(app);
 
