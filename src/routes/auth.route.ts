@@ -3,6 +3,6 @@ import { registerUser, createSession, refreshToken } from '../controllers/auth.c
 
 export const AuthRouter: Router = Router();
 
-AuthRouter.post('/', registerUser);
+AuthRouter.post('/register', registerUser);
 AuthRouter.post('/login', createSession);
 AuthRouter.post('/refresh-token', refreshToken);
