@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../utils/logger';
 import { checkPassword, hashing } from '../utils/hashing';
 import { createUser, findUserByEmail } from '../services/auth.service';
-// import UserType from '../types/user.type';
 import { signJWT, reIssueAccessToken } from '../utils/jwt';
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -48,7 +47,7 @@ export const createSession = async (req: Request, res: Response) => {
       return res.status(401).json({ status: false, statusCode: 401, message: 'Invalid email or password' });
     }
 
-    const accessToken = signJWT({ ...user }, { expiresIn: '15s' });
+    const accessToken = signJWT({ ...user }, { expiresIn: '30s' });
 
     const refreshToken = signJWT({ ...user }, { expiresIn: '1y' });
 
