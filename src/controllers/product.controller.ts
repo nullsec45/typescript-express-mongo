@@ -64,9 +64,9 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     await addProductDB(value);
     logger.info('Success add new product');
 
-    return res.status(200).send({
+    return res.status(201).send({
       stattus: true,
-      statusCode: 200,
+      statusCode: 201,
       message: 'Add product sucess'
     });
   } catch (error) {
@@ -93,14 +93,13 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    logger.info('Success update product');
-
     const result = await updateProductDB(productId, value);
 
     if (!result) {
       return res.status(404).send({ status: false, statusCode: 404, message: 'product id not found' });
     }
 
+    logger.info('Success update product');
     return res.status(200).send({ status: true, statusCode: 200, message: 'update product success' });
   } catch (error) {
     logger.error('ERR : product - update', error);
